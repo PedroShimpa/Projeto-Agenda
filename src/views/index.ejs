@@ -1,0 +1,58 @@
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-2"></div>
+
+    <div class="col-lg-8 my-3">
+      <h1 class="text-center">Agenda</h1>
+
+      <%- include('includes/messages') %>
+      <% if (!user) { %> 
+        <% } else { %> 
+      <% if(contatos.length > 0) { %>
+        <div class="responsive-table">
+          <table class="table my-3">
+            <% contatos.forEach(contato => { %>
+            <tr>
+              <td><%= contato.nome %></td>
+              <td><%= contato.sobrenome %></td>
+              <td><%= contato.telefone %></td>
+              <td><%= contato.email %></td>
+              <td><a href="/contato/index/<%= contato._id %>">Editar</a></td>
+              <td><a class="text-danger" href="/contato/delete/<%= contato._id %>">Excluir</a></td>
+            </tr>
+            <% }); %>
+          </table>
+        </div>
+        <% } else { %>
+          <p class="text-center lead">Não existem contatos na sua agenda.</p>
+          <p class="text-center lead">Que tal <a href="/contato/index">Adicionar Contatos</a>?</a></p>
+        <% }} %>
+        <% if (!user) { %>
+          <h4>Faça login:</h4>
+        
+          <form class="form-login" action="/login/login" method="POST">
+            <input type="hidden" name="_csrf" value=<%= csrfToken %>>
+            <div class="form-group">
+              <label>Seu e-mail:</label>
+              <input type="email" class="form-control" name="email">
+            </div>
+            <div class="form-group">
+              <label>Sua senha:</label>
+              <input type="password" class="form-control" name="password">
+              <small>Administradores nunca pedirão sua senha</small>
+            </div><br>
+            <button type="submit" class="btn btn-primary">Entrar</button><br>
+            <small>Não tem uma conta? <a href="/login/index">Cadastre-se.</a></small>
+          </form>
+       <% } else { %>
+    <% }; %>
+    </div>
+    
+    <div class="col-lg-2"></div>
+  </div>
+</div>
+
+<%- include('includes/footer') %>
